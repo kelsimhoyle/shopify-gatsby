@@ -1,15 +1,25 @@
 import * as React from "react"
+import { graphql } from 'gatsby'
 import ProductGrid from "../components/ProductGrid";
-import Layout from "../layouts";
+import Home from "../components/Home";
 
-
-// markup
-const IndexPage = () => {
+const IndexPage = ({data}) => {
   return (
-    <Layout>
+    <>
+      <Home title={data.site.siteMetadata.title} />
       <ProductGrid />
-    </Layout>
+    </>
   )
 }
+
+export const query = graphql`
+  query HomePageQuery {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`
 
 export default IndexPage

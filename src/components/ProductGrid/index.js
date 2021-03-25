@@ -10,37 +10,38 @@ import { getImage } from "gatsby-plugin-image"
 const ProductGrid = () => {
   const {
     store: { checkout },
-  } = useContext(StoreContext)
+  } = useContext(StoreContext);
+
   const { allShopifyProduct } = useStaticQuery(
     graphql`{
-  allShopifyProduct(sort: {fields: [createdAt], order: DESC}) {
-    edges {
-      node {
-        id
-        title
-        handle
-        createdAt
-        images {
+    allShopifyProduct(sort: {fields: [createdAt], order: DESC}) {
+      edges {
+        node {
           id
-          originalSrc
-          localFile {
-            childImageSharp {
-              gatsbyImageData(
-                width: 200
-                placeholder: TRACED_SVG
-                formats: [AUTO, WEBP, AVIF]
-                )
+          title
+          handle
+          createdAt
+          images {
+            id
+            originalSrc
+            localFile {
+              childImageSharp {
+                gatsbyImageData(
+                  width: 200
+                  placeholder: TRACED_SVG
+                  formats: [AUTO, WEBP, AVIF]
+                  )
+              }
             }
           }
-        }
-        variants {
-          price
+          variants {
+            price
+          }
         }
       }
     }
   }
-}
-`
+  `
   )
 
   const getPrice = price =>

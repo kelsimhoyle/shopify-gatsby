@@ -1,13 +1,13 @@
-import fetch from "isomorphic-fetch"
-import React, { useState, useEffect, useRef } from "react"
-import Client from "shopify-buy"
+import fetch from 'isomorphic-fetch'
+import React, { useState, useEffect, useRef } from 'react'
+import Client from 'shopify-buy'
 
-import Context from "../context/StoreContext"
+import Context from '../context/StoreContext'
 
 const client = Client.buildClient(
   {
-    storefrontAccessToken: process.env.SHOPIFY_ACCESS_TOKEN,
-    domain: `${process.env.SHOP_NAME}.myshopify.com`,
+    storefrontAccessToken: process.env.GATSBY_SHOPIFY_ACCESS_TOKEN,
+    domain: `${process.env.GATSBY_SHOP_NAME}.myshopify.com`,
   },
   fetch
 )
@@ -27,14 +27,14 @@ const ContextProvider = ({ children }) => {
   useEffect(() => {
     const initializeCheckout = async () => {
       // Check for an existing cart.
-      const isBrowser = typeof window !== "undefined"
+      const isBrowser = typeof window !== 'undefined'
       const existingCheckoutID = isBrowser
-        ? localStorage.getItem("shopify_checkout_id")
+        ? localStorage.getItem('shopify_checkout_id')
         : null
 
       const setCheckoutInState = checkout => {
         if (isBrowser) {
-          localStorage.setItem("shopify_checkout_id", checkout.id)
+          localStorage.setItem('shopify_checkout_id', checkout.id)
         }
 
         updateStore(prevState => {
@@ -54,7 +54,7 @@ const ContextProvider = ({ children }) => {
             return
           }
         } catch (e) {
-          localStorage.setItem("shopify_checkout_id", null)
+          localStorage.setItem('shopify_checkout_id', null)
         }
       }
 
@@ -76,8 +76,8 @@ const ContextProvider = ({ children }) => {
       value={{
         store,
         addVariantToCart: async (variantId, quantity) => {
-          if (variantId === "" || !quantity) {
-            console.error("Both a size and quantity are required.")
+          if (variantId === '' || !quantity) {
+            console.error('Both a size and quantity are required.')
             return
           }
 
